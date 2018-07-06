@@ -330,7 +330,7 @@ static int parse_partitions(char *filepath_p, HIFILE_MANUINFO_S *astManuInfo_p)
 			
 			if (lstat(tmp_file, &filestat) != 0)
 			{
-				printf("no patition file find!\n");
+				printf("no patition file %s find!\n",tmp_file);
 				goto do_error;
 			}
 			
@@ -432,8 +432,8 @@ int main(int argc,char* argv[])
     FILE *fp = NULL;
 	int ret,len,oc = 0;
 	int i,j,length = 0;
-	HI_S8 hw_defstr[] = HW_DEFARGS;
-	HI_S8 update_deffile[] = UPDATE_DEFFILE_PATH;
+	HI_S8 hw_defstr[64] = {0};
+	HI_S8 update_deffile[1024] = {0};
 	HI_S8 filepath[1024] = {0};
 	HIFILE_DOCUMENT_S FileInof;
 	HIFILE_MANUINFO_S	*astManuInfo_p;
@@ -456,8 +456,11 @@ int main(int argc,char* argv[])
 			break;
 		case 'f':
 			memcpy(filepath, optarg, strlen(optarg)+1);
+			//printf("filepath is %s\n", filepath);
+			break;
 		case 'd':
 			memcpy(update_deffile, optarg, strlen(optarg)+1);
+			//printf("update_deffile is %s\n", update_deffile);
 			break;
 		default:
 			break;
